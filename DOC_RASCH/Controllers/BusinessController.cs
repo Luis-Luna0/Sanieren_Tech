@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DOC_RASCH.Controllers
@@ -35,34 +37,65 @@ namespace DOC_RASCH.Controllers
         public async Task<IActionResult> Create(Business business)
         {
             try
+            {
+                var businessName = business.Name;
+
+                for (int i = 0; i <= businessName.Length; i++)
                 {
-                _context.Add(business);
+                    if (i == 0)
+                    {
+                        if ((businessName.Substring(i, 1)).All(char.IsDigit))
+                        {
+                            ViewBag.BusinessName = "Primera letra es Número";
+                            return View(business);
+                        }
+                    }
 
-                var NombreCarpetaOp = business.Name;
+                }
 
-                string pathString = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CarpetasOperativas", NombreCarpetaOp);
 
-                System.IO.Directory.CreateDirectory(pathString);
+                TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
+                businessName = myTI.ToTitleCase(business.Name);
+                businessName = Regex.Replace(businessName, @"\s", "");
+                business.Name = businessName;
 
-                await _context.SaveChangesAsync();
+
+
+                if ((business.Name).All(char.IsDigit))
+                {
+                    ViewBag.BusinessName = "El Nombre del cliente no puede ser solo númerico.";
+                    return View(business);
+                }
+                else
+                {
+                    _context.Add(business);
+
+                    var NombreCarpetaOp = business.Name;
+
+                    string pathString = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CarpetasOperativas", NombreCarpetaOp);
+
+                    System.IO.Directory.CreateDirectory(pathString);
+
+                    await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateException dbUpdateException)
+            }
+            catch (DbUpdateException dbUpdateException)
+            {
+                if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                 {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe una empresa con este nombre.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
+                    ModelState.AddModelError(string.Empty, "Ya existe una empresa con este nombre.");
                 }
-                catch (Exception exception)
+                else
                 {
-                    ModelState.AddModelError(string.Empty, exception.Message);
+                    ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
                 }
-            
+            }
+            catch (Exception exception)
+            {
+                ModelState.AddModelError(string.Empty, exception.Message);
+            }
+
             return View(business);
         }
 

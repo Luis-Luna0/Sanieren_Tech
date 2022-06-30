@@ -1,0 +1,52 @@
+﻿@using DOC_RASCH.Common.Enums
+@model DOC_RASCH.Models.UserViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body>
+
+        <div class="login-html">
+      <div class="container">
+             <div class="form-holder">
+                <div class="card ">
+                    <h3 class="   d-flex justify-content-center">Crear Usuario</h3>
+                <div class="col-md-12">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <partial name="_User" />
+                <div class="row">
+                    <div class="col-md-6">        
+                        <div class="form-group">
+                            <label asp-for="UserType" class="control-label"></label>
+                            <select asp-for="UserType" class="form-control" asp-items="Html.GetEnumSelectList<UserType>()">
+                                <option selected="selected" value="">Tipo de usuario</option>
+                            </select>
+                            <span asp-validation-for="UserType" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                        <div class="form-group">
+                            <input type="submit" value="Crear" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-success">Regresar</a>
+                        </div>
+                </form>
+                </div>
+          </div>
+        </div>
+        </div>
+        </div>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

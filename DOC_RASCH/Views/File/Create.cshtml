@@ -1,0 +1,58 @@
+﻿@model DOC_RASCH.Data.Entities.File
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{
+    List<DOC_RASCH.Data.Entities.Business> listaBusinesses = ViewBag.Departamentos;
+}
+
+<body>
+    <main>
+              <div class="login-html">
+      <div class="container">
+            <div class="container-fluid  justify-content-center">
+                <div class="card px-1 py-4">
+                    <h3 class="   d-flex justify-content-center">Registrar Carpeta</h3>
+                <div class="col-md-12">
+                    <form asp-action="Create">
+                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="FileName" class="control-label"></label>
+                                <input asp-for="FileName" class="form-control" />
+                                <span asp-validation-for="FileName" class="text-danger"></span>
+                             </div>
+                             <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+                            <div class="form-group">
+                                <label asp-for="BusinessId" class="control-label"></label>
+                <select asp-for="BusinessId" class="form-control">
+                                    @foreach (var dept in listaBusinesses)
+                                    {
+                                    <option value="@dept.Id">@dept.Name</option>
+                                    }
+                </select>
+                <span asp-validation-for="BusinessId" class="text-danger" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Url" value="ruta" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" value=1 asp-for="Active" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+          </div>
+        </div>
+        </div>
+        </div>
+    </main>
+</body>

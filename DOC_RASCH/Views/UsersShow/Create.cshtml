@@ -1,0 +1,77 @@
+﻿@model DOC_RASCH.Data.Entities.Document
+
+@{
+    ViewData["Title"] = "Create";
+}
+@{
+    List<DOC_RASCH.Data.Entities.Section> listaSections = ViewBag.Secciones;
+}
+<body>
+    <main>
+              <div class="login-html">
+      <div class="container">
+            <div class="container-fluid  justify-content-center">
+                <div class="card px-1 py-4">
+                    <h3 class="   d-flex justify-content-center">Subir Documento</h3>
+                <div class="col-md-12">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" enctype="multipart/form-data"></div>
+                            <div class="form-group">
+                                <label asp-for="SectionId" class="control-label"></label>
+                                <select asp-for="SectionId" class="form-control">
+                                    @foreach (var sections in listaSections)
+                                    {
+                                        <option value="@sections.Id">@sections.FileName || @sections.Url</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="SectionId" class="text-danger" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FileName" class="control-label"></label>
+                                <input asp-for="FileName" class="form-control" />
+                                <span asp-validation-for="FileName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Date_In" class="control-label"></label>
+                                <input type="date" id="Date_In" asp-for="Date_In" class="form-control" disabled/>
+                                <span asp-validation-for="Date_In" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Date_Mod" class="control-label"></label>
+                                <input type="date" id="Date_Mod" asp-for="Date_Mod" class="form-control" disabled/>
+                                <span asp-validation-for="Date_Mod" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Url" value="ruta" class="form-control" hidden/>
+                                <span asp-validation-for="Url" class="text-danger" hidden></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Word" class="control-label"></label>
+                                <input asp-for="Word" class="form-control" />
+                                <span asp-validation-for="Word" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" asp-for="Active"  value =1 class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                                <a asp-action="Index" class="btn btn-success">Regresar</a>
+                            </div>
+                    </form>
+
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </main>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        document.getElementById("Date_In").valueAsDate = new Date();
+        document.getElementById("Date_Mod").valueAsDate = new Date();
+    </script>    
+}

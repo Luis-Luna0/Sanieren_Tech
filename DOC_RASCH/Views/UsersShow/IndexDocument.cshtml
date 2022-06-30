@@ -1,0 +1,174 @@
+﻿@model IEnumerable<DOC_RASCH.Data.Entities.Document>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" />
+@{
+    TempData.Keep("FileId");
+}
+<body id="page-top">
+  
+        <!-- Main Content -->
+        <div id="content">
+            <div class="card-header">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Documentos</h3>
+            </div>
+            <div class="panel-body">
+                <br />
+             
+               
+                <table class="table table-hover table-responsive table-striped" id="MyTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.FileName)
+                            </th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model) {
+                                    <tr>
+                                        @if (@item.Format == 1 && User.IsInRole("User")){
+                                        <td>
+                                            <img src="~/images/pdf.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
+                                        </td>
+                                        <td>
+                                            @item.FileName
+                                        </td>
+                                        <td>
+
+                                            <p>
+                                              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@GetNameCollapse(@item.Id)" aria-expanded="false" aria-controls="collapseExample">
+                                                Mostrar Documento
+                                              </button>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <div class="collapse" id="@GetNameCollapse(@item.Id)">
+                                                        <div style=" width:48%;background:#000; height: 55px; position:absolute;"></div>
+                                                        <iframe src="@item.ShortUrl" type="application/pdf" width="600" height="650"  @*style="pointer-events:none;"*@ > </iframe>
+                                                     
+                                                        
+                                            </div>
+                                        </td>
+                                        }
+                                        else if(User.Identity.IsAuthenticated && User.IsInRole("Operative"))
+                                        {
+                                        <td>
+                                            @if(@item.Format == 1)
+                                            {   
+                                                <img src="~/images/pdf.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
+                                            }
+                                            else if(@item.Format == 2)
+                                            {
+                                                <img src="~/images/word.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
+                                            }else if(@item.Format == 3)
+                                            {
+                                                <img src="~/images/excel.png" style="width: 60px; height: 60px; border-radius: 100px;" />
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.FileName
+                                        </td>
+                                        <td>
+
+                                            @if(@item.Format ==1 && User.IsInRole("Operative"))
+                                            {
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@GetName(@item.Id)">Ver PDF</button>
+                                                    <div class="modal fade" id="@GetName(@item.Id)" tabindex="-1" aria-labelledby="@GetLabel(@item.Id)" aria-hidden="true">
+                                                      <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="@GetLabel(@item.Id)">@item.FileName</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                 <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                                <iframe src="@item.ShortUrl" height="500" width="760"></iframe>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                              </div>
+                                            }    
+                                            else if(@item.Format == 2 || User.IsInRole("Operative") )
+                                                {
+                                                    <a asp-action="DownloadExcel" asp-route-id="@item.Id" class="btn btn-primary">Descargar</a>
+                                                }
+                                                else if(@item.Format == 3 || User.IsInRole("Operative"))
+                                                {
+                                                    <a asp-action="DownloadWord" asp-route-id="@item.Id" class="btn btn-primary">Descargar</a>
+                                                }
+                                         </td>
+                                   }
+                            </tr>
+                            }
+                    </tbody>  
+                </table>
+               
+            </div>
+        </div>
+    </div>
+      <a asp-action="IndexSection"  asp-route-id="@TempData["FileId"]"  class="btn btn-success">Regresar</a>
+</div>
+
+</div>
+
+</div>
+ 
+</main>
+</body>
+
+
+
+@functions {
+    public string GetName(int id)
+    {
+        string name = "Modal";
+        name += id;
+        return name;
+    }
+    public string GetLabel(int id)
+    {
+        string label = "ModalLabel";
+        label += id;
+        return label;
+    }
+    public string GetNameCollapse(int id)
+    {
+        string name = "collapse";
+        name += id;
+        return name;
+    }
+
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="/js/deleteDialog.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#MyTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+           
+        });
+    </script>
+}
+

@@ -1,0 +1,64 @@
+﻿@model DOC_RASCH.Data.Entities.Document
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<body>
+    <main>
+      <div class="container">
+            <div class="container-fluid  justify-content-center">
+                <div class="card px-1 py-4">
+                    <h3 class="   d-flex justify-content-center">Editar Documento</h3>
+                <div class="col-md-12">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FileName" class="control-label"></label>
+                <input asp-for="FileName" class="form-control" />
+                <span asp-validation-for="FileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_In" class="control-label"></label>
+                <input asp-for="Date_In" class="form-control" />
+                <span asp-validation-for="Date_In" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_Mod" class="control-label"></label>
+                <input asp-for="Date_Mod" class="form-control" />
+                <span asp-validation-for="Date_Mod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Word" class="control-label"></label>
+                <input asp-for="Word" class="form-control" />
+                <span asp-validation-for="Word" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Active" class="control-label"></label>
+                <input asp-for="Active" class="form-control" />
+                <span asp-validation-for="Active" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                 <a asp-action="Index" class="btn btn-success">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+        </div>
+    </main>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

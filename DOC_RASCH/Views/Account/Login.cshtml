@@ -1,0 +1,48 @@
+﻿@model DOC_RASCH.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <main>
+		<div class="login-wrap">
+			<div class="login-html">
+			<label class="tab">INICIO DE SESIÓN</label>
+			<div class="login-form">
+			<div class="sign-in-htm">
+				<form method="post">
+				<div asp-validation-summary="ModelOnly"></div>
+				<div class="group">
+					<label class="label" asp-for="Username"></label>
+					<input class="input" asp-for="Username" class="form-control" />
+					<span asp-validation-for="Username" class="text-warning"></span>
+				</div>				            
+				<div class="group">
+                    <label class="label" asp-for="Password"></label>
+                    <input class="input" asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-warning"></span>
+                </div>
+
+				<div class="group">
+                    <input type="submit" value="Iniciar Sesión" class="button" />
+				</div>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+                    <a asp-action="RecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+				</div>
+				</form>
+			</div>
+			</div>
+			</div>
+		</div>   
+    </main>
+</body>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

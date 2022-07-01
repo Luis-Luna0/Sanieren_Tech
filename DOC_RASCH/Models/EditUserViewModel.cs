@@ -24,9 +24,7 @@ namespace DOC_RASCH.Models
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una empresa.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int BusinessId { get; set; }
-
         public IEnumerable<SelectListItem> Business { get; set; }
-
 
         [Display(Name = "Dirección")]
         [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
@@ -48,5 +46,6 @@ namespace DOC_RASCH.Models
 
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }
+
     }
 }

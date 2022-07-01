@@ -55,5 +55,8 @@ namespace DOC_RASCH.Models
         public string ImageFullPath => ImageId == Guid.Empty
             ? $"https://localhost:44333//images/sinfoto.png"
             : $"https://proyectoe.blob.core.windows.net/user/{ImageId}";
+
+        [Required]
+        public int Active { get; set; }
     }
 }

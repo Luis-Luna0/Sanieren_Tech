@@ -165,6 +165,7 @@ namespace DOC_RASCH.Controllers
             }
 
             business.Active = 0;
+            _context.Update(business);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

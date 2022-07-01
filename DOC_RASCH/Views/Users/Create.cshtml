@@ -15,7 +15,7 @@
                 <div class="col-md-12">
                 <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                    <input type="hidden" asp-for="Active" value=1 class="form-control" />
                         <div class="form-group">
                             <label asp-for="Email" class="control-label"></label>
                             <input asp-for="Email" class="form-control" />
@@ -23,6 +23,7 @@
                         </div>
 
                         <partial name="_User" />
+
                 <div class="row">
                     <div class="col-md-6">        
                         <div class="form-group">

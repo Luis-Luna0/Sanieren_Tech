@@ -114,6 +114,7 @@ namespace DOC_RASCH.Controllers
             }
 
             section.Active = 0;
+            _context.Update(section);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

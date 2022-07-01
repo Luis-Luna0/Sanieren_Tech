@@ -3,29 +3,36 @@
 @{
     ViewData["Title"] = "ChangeUser";
 }
-<h2>Editar</h2>
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-8">
-        <form asp-action="ChangeUser" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ImageId" />
+<body id="page-top">
+    <main>
+        <div class="login-html">
+            <div class="container">
+                <div class="container-fluid  justify-content-center">
+                        <div class="card px-1 py-4">
+                                <h3 class="   d-flex justify-content-center">Editar Usuario</h3>
+                        <div class="col-md-12">
+                            <form asp-action="ChangeUser" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                <input type="hidden" asp-for="ImageId" />
+                                <div class="col-md-12 text-center">
+                                    <img src="@Model.ImageFullPath" style="width:250px;height:250px;border-radius:50%" />
+                                </div>
+                                <partial name="_User2" />
 
-            <partial name="_User2" />
-
-            <div class="form-group">
-                <input type="submit" value="Guardar" class="btn btn-primary" />
-                <a asp-action="ChangePassword" class="btn btn-warning">Cambiar Contraseña</a>
+                                <div class="form-group">
+                                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                                    <a asp-action="ChangePassword" class="btn btn-warning">Cambiar Contraseña</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <img src="@Model.ImageFullPath" style="width:250px;height:250px;border-radius:50%" />
-    </div>
-</div>
+        </div>
+    </main>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

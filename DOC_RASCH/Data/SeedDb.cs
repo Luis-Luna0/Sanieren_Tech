@@ -23,16 +23,16 @@ namespace DOC_RASCH.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckBusinessAsync();
             await CheckRolesAsycn();
-            await CheckUserAsync("Luis", "Luna", "__azphyxiia__@hotmail.es", "5528903575", "Gustavo Baz #230", UserType.Admin);
-            await CheckUserAsync("Brayan", "Piña", "brayan@gmail.com", "5612345678", "Calle Luna Calle Sol", UserType.Admin);
-            await CheckUserAsync("Pablo", "Gonzalez", "pablo@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative);
-            await CheckUserAsync("Pedro", "Linares", "pedro@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative);
-            await CheckUserAsync("Cinthia", "Uriostegui", "cinthia@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.User);
-            await CheckUserAsync("Alondra", "Rocha", "alondra@gmail.com", "5512345678", "Calle Luna Calle Sol", UserType.User);
+            await CheckUserAsync("Luis", "Luna", "__azphyxiia__@hotmail.es", "5528903575", "Gustavo Baz #230", UserType.Admin,1);
+            await CheckUserAsync("Brayan", "Piña", "brayan@gmail.com", "5612345678", "Calle Luna Calle Sol", UserType.Admin,1);
+            await CheckUserAsync("Pablo", "Gonzalez", "pablo@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative,1);
+            await CheckUserAsync("Pedro", "Linares", "pedro@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative,1);
+            await CheckUserAsync("Cinthia", "Uriostegui", "cinthia@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.User,1);
+            await CheckUserAsync("Alondra", "Rocha", "alondra@gmail.com", "5512345678", "Calle Luna Calle Sol", UserType.User,1);
             
         }
 
-        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
+        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, UserType userType, int active)
         {
             User user = await _userHelper.GetUserAsync(email);
             if (user == null)
@@ -46,7 +46,8 @@ namespace DOC_RASCH.Data
                     LastName = lastName,
                     PhoneNumber = phoneNumber,
                     UserName = email,
-                    UserType = userType
+                    UserType = userType,
+                    Active = active
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");

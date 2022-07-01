@@ -42,5 +42,8 @@ namespace DOC_RASCH.Data.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
+        [Required]
+        public int Active { get; set; }
+
     }
 }

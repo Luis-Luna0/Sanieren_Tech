@@ -108,8 +108,8 @@ namespace DOC_RASCH.Controllers
                 return NotFound();
             }
 
-            /*borrado del usuario*/
             file.Active=0;
+            _context.Update(file);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

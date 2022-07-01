@@ -147,8 +147,8 @@ namespace DOC_RASCH.Controllers
                 await _blobHelper.DeleteBlobAsync(user.ImageId, "user");
             }
 
-            /*borrado del usuario*/
-            _context.Users.Remove(user);
+            user.Active = 0;
+            _context.Update(user);
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

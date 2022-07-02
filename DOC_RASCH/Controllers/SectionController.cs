@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
+using DOC_RASCH.Helpers;
+using DOC_RASCH.Models;
 
 namespace DOC_RASCH.Controllers
 {
@@ -14,10 +16,12 @@ namespace DOC_RASCH.Controllers
     {
 
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-        public SectionController(DataContext context)
+        public SectionController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -33,29 +37,25 @@ namespace DOC_RASCH.Controllers
             return View();
         }
 
-        public List<Data.Entities.File> GetFiles()
-        {
-            var consulta = from datos in _context.Files.Where(x => x.Active == 1) select datos;
-            return consulta.ToList();
-        }
-
         // GET: SectionController/Create
         public ActionResult Create()
         {
-            List<Data.Entities.File> listaFiles = GetFiles();
-            ViewBag.Carpetas = listaFiles;
-            return View();
+            SectionViewModel model = new SectionViewModel
+            {
+                Files = _combosHelper.GetComboFile()
+            };
+            return View(model);
         }
 
         // POST: SectionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FileName,Description,FileId,Active,Url")] Section section)
+        public async Task<IActionResult> Create(SectionViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var fileName = _context.Files
-                            .Single(b => b.Id == section.FileId);
+                            .Single(b => b.Id == model.FileId);
 
                 var businessName = _context.Business
                     .Single(b => b.Id == fileName.BusinessId);
@@ -64,17 +64,25 @@ namespace DOC_RASCH.Controllers
 
                 string route = Path.Combine(Directory.GetCurrentDirectory(), CaOp, fileName.FileName);
 
-                string directory = Path.Combine(Directory.GetCurrentDirectory(), route, section.FileName);
+                string directory = Path.Combine(Directory.GetCurrentDirectory(), route, model.FileName);
 
                 System.IO.Directory.CreateDirectory(directory);
 
-                section.Url = directory;
+                model.Url = directory;
 
-                _context.Add(section);
+                Section sectionEtinti = new Section();
+
+                sectionEtinti.FileName = model.FileName;
+                sectionEtinti.Description = model.Description;
+                sectionEtinti.FileId = model.FileId;
+                sectionEtinti.Active = model.Active;
+                sectionEtinti.Url = model.Url;
+
+                _context.Add(sectionEtinti);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         // GET: SectionController/Edit/5

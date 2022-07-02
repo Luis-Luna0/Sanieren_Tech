@@ -2,6 +2,7 @@
 using DOC_RASCH.Data;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DOC_RASCH.Helpers
 {
@@ -16,17 +17,36 @@ namespace DOC_RASCH.Helpers
 
         public IEnumerable<SelectListItem> GetComboBusiness()
         {
-            List<SelectListItem> list = _context.Business.Select(x => new SelectListItem
+            List<SelectListItem> list = _context.Business.Where(x => x.Active == 1).Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = $"{x.Id}"
             })
                 .OrderBy(x => x.Text)
-                .ToList();
+                .ToList(); ;
 
             list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione una empresa...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public IEnumerable<SelectListItem> GetComboFile()
+        {
+            List<SelectListItem> list = _context.Files.Where(x => x.Active == 1).Select(x => new SelectListItem
+            {
+                Text = x.FileName,
+                Value = $"{x.Id}"
+            })
+                .OrderBy(x => x.Text)
+                .ToList(); ;
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione una Carpeta...]",
                 Value = "0"
             });
 

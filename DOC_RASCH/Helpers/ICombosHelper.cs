@@ -7,6 +7,7 @@ namespace DOC_RASCH.Helpers
     {
         IEnumerable<SelectListItem> GetComboBusiness();
 
+        IEnumerable<SelectListItem> GetComboFile();
 
     }
 }

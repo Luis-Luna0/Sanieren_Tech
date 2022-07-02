@@ -1,12 +1,15 @@
 ﻿using DOC_RASCH.Data;
 using DOC_RASCH.Data.Entities;
+using DOC_RASCH.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DOC_RASCH.Helpers;
 
 namespace DOC_RASCH.Controllers
 {
@@ -14,10 +17,12 @@ namespace DOC_RASCH.Controllers
     {
 
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-        public FileController(DataContext context)
+        public FileController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
         }
 
         // GET: FileController
@@ -34,43 +39,47 @@ namespace DOC_RASCH.Controllers
             return View();
         }
 
-        public List<Business> GetBusinesses()
-        {
-            var consulta = from datos in _context.Business select datos;
-            return consulta.ToList();
-        }
-
         public ActionResult Create()
         {
-            List<Business> listadept = GetBusinesses();
-            ViewBag.Departamentos = listadept;
-            return View();
+            FileViewModel model = new FileViewModel
+            {
+                Business = _combosHelper.GetComboBusiness()
+            };
+
+            return View(model);
         }
 
         // POST: FileController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FileName,Description,BusinessId,Active,Url")] Data.Entities.File file)
+        public async Task<IActionResult> Create(FileViewModel model)
         {
             if (ModelState.IsValid)
-            {
-                var nameDirectory = from datos in _context.Business where datos.Id == file.Business.Id select datos.Name;
+            {                
                 var business = _context.Business
-                            .Single(b => b.Id == file.BusinessId);
+                            .Single(b => b.Id == model.BusinessId);
 
                 string operativeDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CarpetasOperativas", business.Name);
 
-                string directory = Path.Combine(Directory.GetCurrentDirectory(), operativeDirectory, file.FileName);
+                string directory = Path.Combine(Directory.GetCurrentDirectory(), operativeDirectory, model.FileName);
 
                 System.IO.Directory.CreateDirectory(directory);
 
-                file.Url = directory;
+                model.Url = directory;
 
-                _context.Add(file);
+                Data.Entities.File fileEntiti = new Data.Entities.File();
+
+                fileEntiti.FileName = model.FileName;
+                fileEntiti.Description = model.Description;
+                fileEntiti.BusinessId = model.BusinessId;
+                fileEntiti.Active = model.Active;
+                fileEntiti.Url = model.Url;
+
+                _context.Add(fileEntiti);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return View();
         }
 
         // GET: FileController/Edit/5
@@ -111,7 +120,6 @@ namespace DOC_RASCH.Controllers
             file.Active=0;
             _context.Update(file);
             await _context.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
 

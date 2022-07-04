@@ -1,5 +1,7 @@
 ﻿using DOC_RASCH.Data;
 using DOC_RASCH.Data.Entities;
+using DOC_RASCH.Helpers;
+using DOC_RASCH.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +16,12 @@ namespace DOC_RASCH.Controllers
     public class DocumentController : Controller
     {
         private readonly DataContext _context;
+        private readonly ICombosHelper _combosHelper;
 
-        public DocumentController(DataContext context)
+        public DocumentController(DataContext context, ICombosHelper combosHelper)
         {
             _context = context;
+            _combosHelper = combosHelper;
         }
 
         // GET: DocumentController
@@ -46,10 +50,14 @@ namespace DOC_RASCH.Controllers
             return View(document);
         }
         public IActionResult Create()
-        {
-            List<Section> listaSections = GetSections();
-            ViewBag.Secciones = listaSections;
-            return View();
+        {           
+
+            DocumentViewModel model = new DocumentViewModel
+            {
+                Section = _combosHelper.GetComboSection()
+            };
+
+            return View(model);
         }
 
         public List<Section> GetSections()

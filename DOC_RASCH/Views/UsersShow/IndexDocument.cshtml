@@ -3,10 +3,8 @@
 @{
     TempData.Keep("FileId");
 }
-<body id="page-top">
+<body id="page-top" oncontextmenu="return false;">
     <main>
-  
-        <!-- Main Content -->
         <div id="content">
             <div class="card-header">
     <div class="col-md-12">
@@ -41,21 +39,30 @@
                                             @item.FileName
                                         </td>
                                         <td>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@GetName(@item.Id)">Ver Documento</button>
+                                                    <div class="modal fade" id="@GetName(@item.Id)" tabindex="-1" aria-labelledby="@GetLabel(@item.Id)" aria-hidden="true">
+                                                      <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="@GetLabel(@item.Id)">@item.FileName</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                 <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                              <iframe id="myPdf" src="@item.ShortUrl#toolbar=0" type="application/pdf" onload="injectJS(this)" width="760" height="500">
+                                                                    
+                                                                </iframe>
+                                                                @*<object id="myElement" onload="injectJS(this);" oncontextmenu="return false;" src="@item.ShortUrl#toolbar=0" type="application/pdf" height="500" width="760" > </object>*@
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                              </div>
+                                        </td>
 
-                                            <p>
-                                              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#@GetNameCollapse(@item.Id)" aria-expanded="false" aria-controls="collapseExample">
-                                                Mostrar Documento
-                                              </button>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <div class="collapse" id="@GetNameCollapse(@item.Id)">
-                                                        <div style=" width:48%;background:#000; height: 55px; position:absolute;"></div>
-                                                        <iframe src="@item.ShortUrl" type="application/pdf" width="600" height="650"  @*style="pointer-events:none;"*@ > </iframe>
-                                                     
-                                                        
-                                            </div>
-                                        </td>
                                         }
                                         else if(User.Identity.IsAuthenticated && User.IsInRole("Operative"))
                                         {
@@ -79,7 +86,7 @@
 
                                             @if(@item.Format ==1 && User.IsInRole("Operative"))
                                             {
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@GetName(@item.Id)">Ver PDF</button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@GetName(@item.Id)">Ver Documento</button>
                                                     <div class="modal fade" id="@GetName(@item.Id)" tabindex="-1" aria-labelledby="@GetLabel(@item.Id)" aria-hidden="true">
                                                       <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
@@ -90,7 +97,7 @@
                                                             </button>
                                                           </div>
                                                           <div class="modal-body">
-                                                                <iframe src="@item.ShortUrl" height="500" width="760"></iframe>
+                                                                <embede src="@item.ShortUrl" height="500" width="760"></embede>
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -147,6 +154,7 @@
         return name;
     }
 
+
 }
 
 @section Scripts {
@@ -155,7 +163,7 @@
     <script src="/js/deleteDialog.js"></script>
 
     <script type="text/javascript">
-
+        
         $(document).ready(function () {
             $('#MyTable').DataTable({
                 "language": {
@@ -168,6 +176,6 @@
             });
            
         });
+
     </script>
 }
-

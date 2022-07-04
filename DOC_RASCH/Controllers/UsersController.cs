@@ -134,14 +134,14 @@ namespace DOC_RASCH.Controllers
             {
                 return NotFound();
             }
-            /*Se elimina en cascada usando include y el ThenInclude*/
+
             User user = await _context.Users
                 .FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
-            /*borrado de la imagen*/
+
             if (user.ImageId != Guid.Empty)
             {
                 await _blobHelper.DeleteBlobAsync(user.ImageId, "user");

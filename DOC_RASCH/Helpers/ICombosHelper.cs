@@ -9,5 +9,7 @@ namespace DOC_RASCH.Helpers
 
         IEnumerable<SelectListItem> GetComboFile();
 
+        IEnumerable<SelectListItem> GetComboSection();
+
     }
 }

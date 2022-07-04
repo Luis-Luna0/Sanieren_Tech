@@ -3,74 +3,108 @@
 
 
 <body id="page-top">
-  
-        <!-- Main Content -->
-        <div id="content">
-            <div class="card-header">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Secciones</h3>
+    <!-- Main Content -->
+    <div id="content">
+        <div class="card-header">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Secciones</h3>
+                    </div>
+                    <div class="panel-body">
+                        <hr />
+                        <table class="table table-hover table-responsive table-striped" id="MyTable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FileName)
+                                    </th>
+                                     <th>
+                                        @Html.DisplayNameFor(model => model.Description)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model) {
+                                <tr>
+                                    <td>
+                                        <img src="~/images/secciones.png" style="width: 60px; height: 60px; border-radius: 100px;" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FileName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                                    @if (User.IsInRole("Operative"))
+                                                    { 
+@*                                                    <p>
+                                              <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#@GetNameCollapse(@item.Id)" aria-expanded="false" aria-controls="collapseExample">
+                                                Subir
+                                              </button>
+                                            </p>
+                                                    <div class="collapse" style="pointer-events:none;" id="@GetNameCollapse(@item.Id)">
+                                                       
+                                                                <form asp-action="RegisDocto" asp-controller="UsersShow" enctype="multipart/form-data">
+                                
+                                                                    <input type="hidden" id="SectionId" value="@item.Id" />
+                                                                    <span style="color_red">@ViewBag.message</span>
+                                                                    <label class="control-label"></label>
+                                                                    <input type="file" name="file" class="form-control" />
+                                
+                                                                    <div class="form-group">
+                                                                        <input type="submit" asp- class="btn btn-primary" />
+                                                                    </div>
+                                                                </form>
+                                                          </div>
+                                                           
+*@                                                    
+                                                    }
+                                                    <form asp-action="IndexDocument" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <input  type="hidden" name="id"  value="@item.Id" class="form-control"/>
+                                                        <input  type="hidden" name="idF" value="@item.FileId" class="form-control"/>
+                                                        <input type="submit" value="Abrir" class="btn btn-success" />
+                                                    </div>
+                                                    </form>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <br />
-            
-                <br />
-                <br />
-                <table class="table table-hover table-responsive table-striped" id="MyTable">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FileName)
-                            </th>
-                             <th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                @foreach (var item in Model) {
-                        <tr>
-                            <td>
-                                <img src="~/images/secciones.png" style="width: 60px; height: 60px; border-radius: 100px;" />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FileName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                            @if (User.IsInRole("Operative"))
-                                            {
-                                                <a asp-action="RegisDocto" asp-route-id="@item.Id" class="btn btn-danger">Subir Archivo</a>
-                                            }
-                                            <form asp-action="IndexDocument" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <input  type="hidden" name="id"  value="@item.Id" class="form-control"/>
-                                                <input  type="hidden" name="idF" value="@item.FileId" class="form-control"/>
-                                                <input type="submit" value="Abrir" class="btn btn-success" />
-                                            </div>
-                                            </form>
-                            </td>
-                        </tr>
-                }
-                    </tbody>
-                    
-                </table>
-                
-            </div>
+                <a asp-action="Index" class="btn btn-success">Regresar</a>
         </div>
     </div>
-        <a asp-action="Index" class="btn btn-success">Regresar</a>
-</div>
-
-</div>
-</div>
-</main>
 </body>
+
+@functions {
+    public string GetName(int id)
+    {
+        string name = "Modal";
+        name += id;
+        return name;
+    }
+    public string GetLabel(int id)
+    {
+        string label = "ModalLabel";
+        label += id;
+        return label;
+    }
+    public string GetNameCollapse(int id)
+    {
+        string name = "collapse";
+        name += id;
+        return name;
+    }
+
+}
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>

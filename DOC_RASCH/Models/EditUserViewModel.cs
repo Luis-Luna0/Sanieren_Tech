@@ -20,7 +20,7 @@ namespace DOC_RASCH.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string LastName { get; set; }
 
-        [Display(Name = "Empresa")]
+        [Display(Name = "Cliente")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una empresa.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int BusinessId { get; set; }

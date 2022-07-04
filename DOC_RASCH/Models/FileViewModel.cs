@@ -23,7 +23,7 @@ namespace DOC_RASCH.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
 
-        [Display(Name = "Nombre de la empresa")]
+        [Display(Name = "Nombre del Cliente")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int BusinessId { get; set; }
 

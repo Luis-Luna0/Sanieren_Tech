@@ -27,4 +27,24 @@
     <Folder Include="wwwroot\CarpetasOperativas\RASCH\Documentos Administrativos RASCH\RASCH\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Views\Business\Create.cshtml" />
+    <None Include="Views\Business\Edit.cshtml" />
+    <None Include="Views\Business\Index.cshtml" />
+    <None Include="Views\Document\Create.cshtml" />
+    <None Include="Views\Document\Delete.cshtml" />
+    <None Include="Views\Document\Details.cshtml" />
+    <None Include="Views\Document\Edit.cshtml" />
+    <None Include="Views\Document\Index.cshtml" />
+    <None Include="Views\Document\RegisDocto.cshtml" />
+    <None Include="Views\File\Create.cshtml" />
+    <None Include="Views\File\Index.cshtml" />
+    <None Include="Views\Section\Create.cshtml" />
+    <None Include="Views\Section\Index.cshtml" />
+    <None Include="Views\Users\Create.cshtml" />
+    <None Include="Views\Users\Edit.cshtml" />
+    <None Include="Views\Users\Index.cshtml" />
+    <None Include="Views\Users\_User.cshtml" />
+  </ItemGroup>
+
 </Project>

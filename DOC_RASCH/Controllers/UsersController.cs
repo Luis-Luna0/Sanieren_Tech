@@ -38,7 +38,7 @@ namespace DOC_RASCH.Controllers
         {
             return View(await _context.Users
                 .Include(x => x.Business)
-                .Where(x => x.UserType == UserType.User || x.UserType== UserType.Operative)
+                .Where(x => x.UserType == UserType.User || x.UserType== UserType.Operative && x.Active==1)
                 .ToListAsync());
         }
 
@@ -148,7 +148,7 @@ namespace DOC_RASCH.Controllers
             }
 
             user.Active = 0;
-            _context.Update(user);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

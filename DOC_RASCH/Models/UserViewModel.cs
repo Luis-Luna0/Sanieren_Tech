@@ -44,8 +44,8 @@ namespace DOC_RASCH.Models
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }
 
-        [Display(Name = "Empresa")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar una empresa.")]
+        [Display(Name = "Cliente")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un Cliente.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int BusinessId { get; set; }
 

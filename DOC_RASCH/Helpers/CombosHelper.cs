@@ -28,7 +28,7 @@ namespace DOC_RASCH.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una empresa...]",
+                Text = "[Seleccione un Cliente...]",
                 Value = "0"
             });
 
@@ -42,7 +42,7 @@ namespace DOC_RASCH.Helpers
                 .Include(x => x.Business)
                 .Select(x => new SelectListItem
             {
-                Text = x.FileName + " || Cliente: "+x.Business.Name,
+                Text = "Carpeta: " + x.FileName + " || Cliente: "+x.Business.Name,
                 Value = $"{x.Id}"
             })
                 .OrderBy(x => x.Text)
@@ -65,7 +65,7 @@ namespace DOC_RASCH.Helpers
                 .Include(x => x.File.Business)
                 .Select(x => new SelectListItem
                 {
-                    Text = x.FileName + " || Carpeta: " + x.File.FileName + " || Cliente: "+x.File.Business.Name,
+                    Text = "Sección: " + x.FileName + " || Carpeta: " + x.File.FileName + " || Cliente: "+x.File.Business.Name,
                     Value = $"{x.Id}"
                 })
                 .OrderBy(x => x.Text)
@@ -73,7 +73,7 @@ namespace DOC_RASCH.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una Carpeta...]",
+                Text = "[Seleccione una Sección...]",
                 Value = "0"
             });
 

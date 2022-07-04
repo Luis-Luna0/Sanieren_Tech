@@ -8,7 +8,7 @@ namespace DOC_RASCH.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Nombre de la Subcarpeta")]
+        [Display(Name = "Nombre de la Sección")]
         [RegularExpression("([a-zA-Z0-9 .&'-]+)", ErrorMessage = "El {0} no debe tener carácteres especiales.")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -19,7 +19,7 @@ namespace DOC_RASCH.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
 
-        [Display(Name = "Nombre de la empresa")]
+        [Display(Name = "Nombre del Cliente")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int FileId { get; set; }
 

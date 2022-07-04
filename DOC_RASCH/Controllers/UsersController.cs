@@ -150,7 +150,7 @@ namespace DOC_RASCH.Controllers
             user.Active = 0;
 
             await _context.SaveChangesAsync();
-
+            _context.Update(user);
             return RedirectToAction(nameof(Index));
         }
     }

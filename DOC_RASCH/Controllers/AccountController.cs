@@ -3,12 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using DOC_RASCH.Data.Entities;
 using DOC_RASCH.Helpers;
 using DOC_RASCH.Models;
-using DOC_RASCH.Common.Enums;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
 using DOC_RASCH.Data;
-using DOC_RASCH.Common.Models;
+
 
 namespace DOC_RASCH.Controllers
 {
@@ -73,63 +72,7 @@ namespace DOC_RASCH.Controllers
             return View();
         }
 
-        public IActionResult Register()
-        {
-            AddUserViewModel model = new AddUserViewModel
-            {
-                Business = _combosHelper.GetComboBusiness()
-            };
-
-            return View(model);
-        }
- 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(AddUserViewModel model)
-        {
-
-
-            if (ModelState.IsValid)
-            {
-                Guid imageId = Guid.Empty;
-
-                if (model.ImageFile != null)
-                {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "user");
-                }
-
-                User user = await _userHelper.AddUserAsync(model, imageId, UserType.User);
-                if (user == null)
-                {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado por otro usuario.");
-                    model.Business = _combosHelper.GetComboBusiness();
-                    return View(model);
-                }
-
-                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                string tokenLink = Url.Action("ConfirmEmail", "Account", new
-                {
-                    userid = user.Id,
-                    token = myToken
-                }, protocol: HttpContext.Request.Scheme);
-
-                Response response = _mailHelper.SendMail(model.Username, "RASCH - Confirmación de cuenta", $"<h1>RASCH - Confirmación de cuenta</h1>" +
-                    $"Para habilitar el usuario, " +
-                    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
-                if (response.IsSuccess)
-                {
-                    ViewBag.Message = "Las instrucciones para habilitar su cuenta han sido enviadas al correo.";
-                    return View(model);
-                }
-
-                ModelState.AddModelError(string.Empty, response.Message);
-
-
-            }
-
-            model.Business = _combosHelper.GetComboBusiness();
-            return View(model);
-        }
+        
 
         public async Task<IActionResult> ChangeUser()
         {
@@ -258,7 +201,7 @@ namespace DOC_RASCH.Controllers
                     "ResetPassword",
                     "Account",
                     new { token = myToken }, protocol: HttpContext.Request.Scheme);
-                _mailHelper.SendMail(model.Email, "RASCH - Reseteo de contraseña", $"<h1>RASCH - Reseteo de contraseña</h1>" +
+                _mailHelper.SendMail(model.Email, "Sanieren Tech - Reseteo de contraseña", $"<h1>Sanieren Tech - Reseteo de contraseña</h1>" +
                     $"Para establecer una nueva contraseña haga clic en el siguiente enlace:</br></br>" +
                     $"<a href = \"{link}\">Cambio de Contraseña</a>");
                 ViewBag.Message = "Las instrucciones para el cambio de contraseña han sido enviadas a su email.";

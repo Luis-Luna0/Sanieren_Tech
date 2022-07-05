@@ -28,7 +28,7 @@ namespace DOC_RASCH.Controllers
         public async Task<IActionResult> Index()
         {
             return _context.Documents != null ?
-                View(await _context.Documents.ToListAsync()) :
+                View(await _context.Documents.Where(x => x.Active==1).ToListAsync()) :
                           Problem("Entity set 'DataContext.Documents'  is null.");
         }
 
@@ -231,39 +231,24 @@ namespace DOC_RASCH.Controllers
             return View(document);
         }
 
-        // GET: DocumentsController/Delete/5
+       
+
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Documents == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var document = await _context.Documents
+            Document document = await _context.Documents
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (document == null)
             {
                 return NotFound();
             }
 
-            return View(document);
-        }
-
-        // POST: Documents/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Documents == null)
-            {
-                return Problem("Entity set 'DataContext.Documents'  is null.");
-            }
-            var document = await _context.Documents.FindAsync(id);
-            if (document != null)
-            {
-                _context.Documents.Remove(document);
-            }
-
+            document.Active = 0;
+            _context.Update(document);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

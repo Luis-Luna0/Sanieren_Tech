@@ -76,6 +76,9 @@ namespace DOC_RASCH.Helpers
 
         public async Task<IdentityResult> ConfirmEmailAsync(User user, string token)
         {
+            user.Active = 1;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
             return await _userManager.ConfirmEmailAsync(user, token);
         }
 

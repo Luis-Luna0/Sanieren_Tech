@@ -78,7 +78,7 @@ namespace DOC_RASCH.Controllers
                     token = myToken
                 }, protocol: HttpContext.Request.Scheme);
 
-                Response response = _mailHelper.SendMail(model.Email, "RASCH - Confirmación de cuenta", $"<h1>RASCH - Confirmación de cuenta</h1>" +
+                Response response = _mailHelper.SendMail(model.Email, "Sanieren Tech - Confirmación de cuenta", $"<h1>Sanieren Tech - Confirmación de cuenta</h1>" +
                     $"Para habilitar el usuario, " +
                     $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
 

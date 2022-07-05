@@ -47,5 +47,6 @@ namespace DOC_RASCH.Models
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }
 
+
     }
 }

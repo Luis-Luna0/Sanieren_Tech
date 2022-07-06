@@ -32,7 +32,6 @@
     <None Include="Views\Business\Edit.cshtml" />
     <None Include="Views\Business\Index.cshtml" />
     <None Include="Views\Document\Create.cshtml" />
-    <None Include="Views\Document\Delete.cshtml" />
     <None Include="Views\Document\Details.cshtml" />
     <None Include="Views\Document\Edit.cshtml" />
     <None Include="Views\Document\Index.cshtml" />

@@ -7,7 +7,7 @@ function injectJS() {
     //const element = document.getElementById("myPdf");
     //element.getElementsByTagName("body")[0].setAttribute("oncontextmenu", "return false;");
     var iframevar = document.getElementById('myPdf');
-    var elmnt = iframevar.contentWindow.document.getElementByTagName("body");
+    var elmnt = iframevar.contentWindow.document.getElementByTagName("modal-body");
     elmnt.setAttribute("oncontextmenu", "return false;");
 }
 

@@ -50,10 +50,10 @@
                                                             </button>
                                                           </div>
                                                           <div class="modal-body">
-                                                              <iframe id="myPdf" src="@item.ShortUrl#toolbar=0" type="application/pdf" onload="injectJS(this)" width="760" height="500">
-                                                                    
-                                                                </iframe>
-                                                                @*<object id="myElement" onload="injectJS(this);" oncontextmenu="return false;" src="@item.ShortUrl#toolbar=0" type="application/pdf" height="500" width="760" > </object>*@
+                                                              <iframe id="myPdf" src="@item.ShortUrl#toolbar=0&navpanes=0" type="application/pdf" oncontxtmenu="return false;" onload="injectJS(this)" width="760" height="500"></iframe>
+                                                                     
+                                                                
+                                                               @* <object id="myElement" onload="injectJS(this);" oncontextmenu="return false;" src="@item.ShortUrl#toolbar=0" type="application/pdf" height="500" width="760" > </object>*@
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -97,7 +97,7 @@
                                                             </button>
                                                           </div>
                                                           <div class="modal-body">
-                                                                <embede src="@item.ShortUrl" height="500" width="760"></embede>
+                                                                <iframe src="@item.ShortUrl" height="500" width="760"></iframe>
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -44,18 +44,25 @@ namespace DOC_RASCH.Controllers
         {
             if (ModelState.IsValid)
             {
-                Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
-                if (result.Succeeded)
+                User usr = _context.Users.Where(x => x.Email == model.Username).FirstOrDefault();
+                if (usr.Active == 1)
                 {
-                    if (Request.Query.Keys.Contains("ReturnUrl"))
+                    Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
+                    if (result.Succeeded)
                     {
-                        return Redirect(Request.Query["ReturnUrl"].First());
+
+                        if (Request.Query.Keys.Contains("ReturnUrl"))
+                        {
+                            return Redirect(Request.Query["ReturnUrl"].First());
+                        }
+
+                        return RedirectToAction("Index", "Home");
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
                 }
 
-                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                ModelState.AddModelError(string.Empty,"Cuenta inactiva, comunicate con el administrador")
             }
 
             return View(model);

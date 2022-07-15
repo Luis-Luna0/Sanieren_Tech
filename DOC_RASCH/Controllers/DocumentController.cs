@@ -132,15 +132,6 @@ namespace DOC_RASCH.Controllers
                 {
                     string filename = file.FileName;
                     filename = Path.GetFileName(filename);
-
-                    //string CaOp = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\CarpetasOperativas", Business.Name);
-
-                    //string CaFi = Path.Combine(Directory.GetCurrentDirectory(), CaOp, File.FileName);
-
-                    //string CaSe = Path.Combine(Directory.GetCurrentDirectory(), CaFi, Section.FileName);
-
-                    //string uploadFilePath = Path.Combine(Directory.GetCurrentDirectory(), CaSe, filename);
-
                     string uploadFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Files", filename);
                     ViewBag.message = "El Documento se ha subido exitosamente.";
                     TempData["ruta"] = uploadFilePath;

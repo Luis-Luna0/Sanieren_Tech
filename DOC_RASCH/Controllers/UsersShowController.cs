@@ -30,14 +30,14 @@ namespace DOC_RASCH.Controllers
 
 
             return View(await _context.Files
-              .Where(x => x.BusinessId == id).ToListAsync());
+              .Where(x => x.BusinessId == id && x.Active==1).ToListAsync());
         }
 
 
         public async Task<IActionResult> IndexSection(int id)
         {
             return View(await _context.Sections
-              .Where(x => x.FileId == id).ToListAsync());
+              .Where(x => x.FileId == id && x.Active == 1).ToListAsync());
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace DOC_RASCH.Controllers
         {
             TempData["FileId"]=idF;
             return View(await _context.Documents
-              .Where(x => x.SectionId == id).ToListAsync());
+              .Where(x => x.SectionId == id && x.Active == 1).ToListAsync());
         }
         public async Task ReturnSection(int id)
         {

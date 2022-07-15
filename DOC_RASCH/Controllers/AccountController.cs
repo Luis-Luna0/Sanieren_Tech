@@ -62,7 +62,7 @@ namespace DOC_RASCH.Controllers
                     ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
                 }
 
-                ModelState.AddModelError(string.Empty,"Cuenta inactiva, comunicate con el administrador")
+                ModelState.AddModelError(string.Empty, "Cuenta sin confirmar o inactiva.");
             }
 
             return View(model);

@@ -38,7 +38,7 @@ namespace DOC_RASCH.Controllers
         {
             return View(await _context.Users
                 .Include(x => x.Business)
-                .Where(x => x.Active == 1 && (x.UserType == UserType.User || x.UserType== UserType.Operative))
+                .Where(x => x.Active == 1 && x.UserType == UserType.User)
                 .ToListAsync());
         }
 
@@ -78,9 +78,7 @@ namespace DOC_RASCH.Controllers
                     token = myToken
                 }, protocol: HttpContext.Request.Scheme);
 
-                Response response = _mailHelper.SendMail(model.Email, "Sanieren Tech - Confirmación de cuenta", $"<h1>Sanieren Tech - Confirmación de cuenta</h1>" +
-                    $"Para habilitar el usuario, " +
-                    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
+                await _userHelper.ConfirmEmailAsync(user, tokenLink);
 
                 return RedirectToAction(nameof(Index));
             }

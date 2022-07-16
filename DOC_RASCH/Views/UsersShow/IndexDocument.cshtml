@@ -24,14 +24,13 @@
                                 @Html.DisplayNameFor(model => model.FileName)
                             </th>
                             <th></th>
-                            <th></th>
 
                         </tr>
                     </thead>
                     <tbody>
                 @foreach (var item in Model) {
                                     <tr>
-                                        @if (@item.Format == 1 && User.IsInRole("User")){
+                                        
                                         <td>
                                             <img src="~/images/pdf.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
                                         </td>
@@ -51,9 +50,6 @@
                                                           </div>
                                                           <div class="modal-body">
                                                               <iframe id="myPdf" src="@item.ShortUrl#toolbar=0&navpanes=0" type="application/pdf" oncontxtmenu="return false;" onload="injectJS(this)" width="760" height="500"></iframe>
-                                                                     
-                                                                
-                                                               @* <object id="myElement" onload="injectJS(this);" oncontextmenu="return false;" src="@item.ShortUrl#toolbar=0" type="application/pdf" height="500" width="760" > </object>*@
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -62,60 +58,6 @@
                                                       </div>
                                               </div>
                                         </td>
-
-                                        }
-                                        else if(User.Identity.IsAuthenticated && User.IsInRole("Operative"))
-                                        {
-                                        <td>
-                                            @if(@item.Format == 1)
-                                            {   
-                                                <img src="~/images/pdf.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
-                                            }
-                                            else if(@item.Format == 2)
-                                            {
-                                                <img src="~/images/word.jpg" style="width: 60px; height: 60px; border-radius: 100px;" />
-                                            }else if(@item.Format == 3)
-                                            {
-                                                <img src="~/images/excel.png" style="width: 60px; height: 60px; border-radius: 100px;" />
-                                            }
-                                        </td>
-                                        <td>
-                                            @item.FileName
-                                        </td>
-                                        <td>
-
-                                            @if(@item.Format ==1 && User.IsInRole("Operative"))
-                                            {
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@GetName(@item.Id)">Ver Documento</button>
-                                                    <div class="modal fade" id="@GetName(@item.Id)" tabindex="-1" aria-labelledby="@GetLabel(@item.Id)" aria-hidden="true">
-                                                      <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <h5 class="modal-title" id="@GetLabel(@item.Id)">@item.FileName</h5>
-                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                                 <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                                <iframe src="@item.ShortUrl" height="500" width="760"></iframe>
-                                                          </div>
-                                                          <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                              </div>
-                                            }    
-                                            else if(@item.Format == 2 || User.IsInRole("Operative") )
-                                                {
-                                                    <a asp-action="DownloadExcel" asp-route-id="@item.Id" class="btn btn-primary">Descargar</a>
-                                                }
-                                                else if(@item.Format == 3 || User.IsInRole("Operative"))
-                                                {
-                                                    <a asp-action="DownloadWord" asp-route-id="@item.Id" class="btn btn-primary">Descargar</a>
-                                                }
-                                         </td>
-                                   }
                             </tr>
                             }
                     </tbody>  

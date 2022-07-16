@@ -2,7 +2,6 @@
 using DOC_RASCH.Data;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
 
 namespace DOC_RASCH.Helpers
@@ -74,6 +73,25 @@ namespace DOC_RASCH.Helpers
             list.Insert(0, new SelectListItem
             {
                 Text = "[Seleccione una Sección...]",
+                Value = "0"
+            });
+
+            return list;
+        }
+
+        public IEnumerable<SelectListItem> GetComboStatus()
+        {
+            List<SelectListItem> list = _context.Status.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = $"{x.Id}"
+            })
+                .OrderBy(x => x.Text)
+                .ToList(); ;
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione el estatus del documento...]",
                 Value = "0"
             });
 

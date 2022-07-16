@@ -39,37 +39,13 @@
                                         @Html.DisplayFor(modelItem => item.Description)
                                     </td>
                                     <td>
-                                                    @if (User.IsInRole("Operative"))
-                                                    { 
-@*                                                    <p>
-                                              <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#@GetNameCollapse(@item.Id)" aria-expanded="false" aria-controls="collapseExample">
-                                                Subir
-                                              </button>
-                                            </p>
-                                                    <div class="collapse" style="pointer-events:none;" id="@GetNameCollapse(@item.Id)">
-                                                       
-                                                                <form asp-action="RegisDocto" asp-controller="UsersShow" enctype="multipart/form-data">
-                                
-                                                                    <input type="hidden" id="SectionId" value="@item.Id" />
-                                                                    <span style="color_red">@ViewBag.message</span>
-                                                                    <label class="control-label"></label>
-                                                                    <input type="file" name="file" class="form-control" />
-                                
-                                                                    <div class="form-group">
-                                                                        <input type="submit" asp- class="btn btn-primary" />
-                                                                    </div>
-                                                                </form>
-                                                          </div>
-                                                           
-*@                                                    
-                                                    }
-                                                    <form asp-action="IndexDocument" enctype="multipart/form-data">
-                                                    <div class="form-group">
-                                                        <input  type="hidden" name="id"  value="@item.Id" class="form-control"/>
-                                                        <input  type="hidden" name="idF" value="@item.FileId" class="form-control"/>
-                                                        <input type="submit" value="Abrir" class="btn btn-success" />
-                                                    </div>
-                                                    </form>
+                                        <form asp-action="IndexDocument" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <input  type="hidden" name="id"  value="@item.Id" class="form-control"/>
+                                            <input  type="hidden" name="idF" value="@item.FileId" class="form-control"/>
+                                            <input type="submit" value="Abrir" class="btn btn-success" />
+                                        </div>
+                                        </form>
                                     </td>
                                 </tr>
                                 }

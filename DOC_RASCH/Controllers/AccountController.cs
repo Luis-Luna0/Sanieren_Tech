@@ -63,7 +63,7 @@ namespace DOC_RASCH.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Cuenta sin confirmar o inactiva.");
+                    ModelState.AddModelError(string.Empty, "Cuenta desactivada, para activarla pongase en contacto con el administrador.");
                 }
             }
 

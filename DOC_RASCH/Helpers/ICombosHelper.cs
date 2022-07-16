@@ -11,5 +11,7 @@ namespace DOC_RASCH.Helpers
 
         IEnumerable<SelectListItem> GetComboSection();
 
+        IEnumerable<SelectListItem> GetComboStatus();
+
     }
 }

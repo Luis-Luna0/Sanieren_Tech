@@ -21,13 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\CarpetasOperativas\RASCH\Documentos Administrativos RASCH\Contratos\" />
-    <Folder Include="wwwroot\CarpetasOperativas\RASCH\Documentos Administrativos RASCH\Prueba\" />
-    <Folder Include="wwwroot\CarpetasOperativas\RASCH\Documentos Administrativos RASCH\RASCH Contratos\" />
-    <Folder Include="wwwroot\CarpetasOperativas\RASCH\Documentos Administrativos RASCH\RASCH\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Views\Business\Create.cshtml" />
     <None Include="Views\Business\Edit.cshtml" />
     <None Include="Views\Business\Index.cshtml" />
@@ -44,6 +37,11 @@
     <None Include="Views\Users\Edit.cshtml" />
     <None Include="Views\Users\Index.cshtml" />
     <None Include="Views\Users\_User.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\CarpetasOperativas\" />
+    <Folder Include="wwwroot\Files\" />
   </ItemGroup>
 
 </Project>

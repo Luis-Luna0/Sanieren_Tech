@@ -11,6 +11,7 @@ namespace DOC_RASCH.Data
         {
 
         }
+        public DbSet<Status> Status { get; set; }
 
         public DbSet<Business> Business { get; set; }
 

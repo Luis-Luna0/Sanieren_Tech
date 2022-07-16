@@ -8,7 +8,5 @@ namespace DOC_RASCH.Common.Enums
         Admin =1,
         [Display(Name = "Cliente")]
         User =2,
-        [Display(Name = "Operador")]
-        Operative =3
     }
 }

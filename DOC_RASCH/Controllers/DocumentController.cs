@@ -54,7 +54,8 @@ namespace DOC_RASCH.Controllers
 
             DocumentViewModel model = new DocumentViewModel
             {
-                Section = _combosHelper.GetComboSection()
+                Section = _combosHelper.GetComboSection(),
+                Status = _combosHelper.GetComboStatus()
             };
 
             return View(model);
@@ -105,22 +106,28 @@ namespace DOC_RASCH.Controllers
         // GET: DocumentsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FileName,Date_In,Date_Mod,Url,Word,Active,Format,SectionId")] Document document)
+        public async Task<IActionResult> Create(DocumentViewModel model)
         {
+            Document doc = new Document();
             if (ModelState.IsValid)
             {
+
                 ViewBag.message = "Documento subido correctamente";
+                doc.Id = model.Id;
+                doc.StatusId = model.StatusId;
                 DateTime thisDay = DateTime.Now;
-                document.Date_In = thisDay;
-                document.Date_Mod = thisDay;
-                document.Url = TempData["ruta"].ToString();
-                document.Format = Convert.ToInt32(TempData["Formato"]);
-                document.SectionId = (int)document.SectionId;
-                _context.Add(document);
+                doc.Date_In = thisDay;
+                doc.Date_Mod = thisDay;
+                doc.Url = TempData["ruta"].ToString();
+                doc.Format = Convert.ToInt32(TempData["Formato"]);
+                doc.SectionId = (int)model.SectionId;    
+                doc.FileName= model.FileName;
+                doc.Active = model.Active;
+                _context.Add(doc);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(document);
+            return View(doc);
         }
 
         [HttpPost]

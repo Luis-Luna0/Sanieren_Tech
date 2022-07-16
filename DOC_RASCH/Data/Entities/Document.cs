@@ -25,12 +25,11 @@ namespace DOC_RASCH.Data.Entities
         [Display(Name = "Url corta del documento")]
         public string? ShortUrl { get; set; }
 
-        [Display(Name = "Palabra Clave del Documento")]
-        [MaxLength(50, ErrorMessage = "La palabra clave del documento no puede tener más de 50 carácteres.")]
-        [Required(ErrorMessage = "La palabra clave es Oblgatorio.")]
-        public string Word { get; set; }
+        [Display(Name = "Estatus")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public Status Status { get; set; }
+        public int StatusId { get; set; }
 
-        [Display(Name = "Estatus del Documento")]
         [Required(ErrorMessage = "El estatus es Obligatorio.")]
         public byte Active { get; set; }
 

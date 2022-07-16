@@ -37,10 +37,10 @@
                                 <input asp-for="Url" value="ruta" class="form-control" hidden/>
                                 <span asp-validation-for="Url" class="text-danger" hidden></span>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Word" class="control-label"></label>
-                                <input asp-for="Word" class="form-control" />
-                                <span asp-validation-for="Word" class="text-danger"></span>
+                             <div class="form-group">
+                                <label asp-for="StatusId" class="control-label"></label>
+                                <select asp-for="StatusId" asp-items="Model.Status" class="form-control"></select>
+                                <span asp-validation-for="StatusId" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="hidden" asp-for="Active"  value =1 class="form-control" />

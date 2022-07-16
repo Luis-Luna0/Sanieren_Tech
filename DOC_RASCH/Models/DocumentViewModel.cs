@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using DOC_RASCH.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,10 +28,10 @@ namespace DOC_RASCH.Models
         [Display(Name = "Url corta del documento")]
         public string? ShortUrl { get; set; }
 
-        [Display(Name = "Palabra Clave del Documento")]
-        [MaxLength(50, ErrorMessage = "La palabra clave del documento no puede tener más de 50 carácteres.")]
-        [Required(ErrorMessage = "La palabra clave es Oblgatorio.")]
-        public string Word { get; set; }
+        [Display(Name = "Estatus")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int StatusId { get; set; }
+        public IEnumerable<SelectListItem> Status { get; set; }
 
         [Display(Name = "Estatus del Documento")]
         [Required(ErrorMessage = "El estatus es Obligatorio.")]

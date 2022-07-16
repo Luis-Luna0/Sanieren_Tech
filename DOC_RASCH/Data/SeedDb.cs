@@ -23,10 +23,9 @@ namespace DOC_RASCH.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckBusinessAsync();
             await CheckRolesAsycn();
+            await CheckStatusAsync();
             await CheckUserAsync("Luis", "Luna", "__azphyxiia__@hotmail.es", "5528903575", "Gustavo Baz #230", UserType.Admin,1);
             await CheckUserAsync("Brayan", "Piña", "brayan@gmail.com", "5612345678", "Calle Luna Calle Sol", UserType.Admin,1);
-            await CheckUserAsync("Pablo", "Gonzalez", "pablo@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative,1);
-            await CheckUserAsync("Pedro", "Linares", "pedro@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.Operative,1);
             await CheckUserAsync("Cinthia", "Uriostegui", "cinthia@gmail.com", "5522889966", "Calle Luna Calle Sol", UserType.User,1);
             await CheckUserAsync("Alondra", "Rocha", "alondra@gmail.com", "5512345678", "Calle Luna Calle Sol", UserType.User,1);
             
@@ -75,8 +74,17 @@ namespace DOC_RASCH.Data
         {
             await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
             await _userHelper.CheckRoleAsync(UserType.User.ToString());
-            await _userHelper.CheckRoleAsync(UserType.Operative.ToString());
-            
+        }
+
+        private async Task CheckStatusAsync()
+        {
+            if (!_context.Status.Any())
+            {
+                _context.Status.Add(new Status { Name = "Apobado" });
+                _context.Status.Add(new Status { Name = "Pendiente" });
+                _context.Status.Add(new Status { Name = "Rechazado" });
+                await _context.SaveChangesAsync();
+            }
         }
 
     }
